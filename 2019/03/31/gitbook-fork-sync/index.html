@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="github使用指南——在你pull request之前（如何同步你fork的库） 作者：BG2DGR合作写书假定这篇文章的前置文章，李雨桐同学的《如何用git写文章》已经完善了，大家都可以按照他的步骤写一篇新的文章了，且推送到自己的GitHub上面，但是gitbook是托管到BY2HIT的GitHub上面(BY2HIT)。想要你写的这篇文章发布，就需要向BY2HIT的Github发起pull r">
+<meta name="keywords" content="git,github,Wiki接入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="github使用指南——在你pull request之前（如何同步你fork的库）">
+<meta property="og:url" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/index.html">
+<meta property="og:site_name" content="BY2HIT Wiki">
+<meta property="og:description" content="github使用指南——在你pull request之前（如何同步你fork的库） 作者：BG2DGR合作写书假定这篇文章的前置文章，李雨桐同学的《如何用git写文章》已经完善了，大家都可以按照他的步骤写一篇新的文章了，且推送到自己的GitHub上面，但是gitbook是托管到BY2HIT的GitHub上面(BY2HIT)。想要你写的这篇文章发布，就需要向BY2HIT的Github发起pull r">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/00.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/01.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/02.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/03.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/04.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/05.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/06.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/07.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/08.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/09.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/12.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/13.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/14.png">
+<meta property="og:updated_time" content="2019-04-02T15:54:10.228Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="github使用指南——在你pull request之前（如何同步你fork的库）">
+<meta name="twitter:description" content="github使用指南——在你pull request之前（如何同步你fork的库） 作者：BG2DGR合作写书假定这篇文章的前置文章，李雨桐同学的《如何用git写文章》已经完善了，大家都可以按照他的步骤写一篇新的文章了，且推送到自己的GitHub上面，但是gitbook是托管到BY2HIT的GitHub上面(BY2HIT)。想要你写的这篇文章发布，就需要向BY2HIT的Github发起pull r">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/31/gitbook-fork-sync/00.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/31/gitbook-fork-sync/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>github使用指南——在你pull request之前（如何同步你fork的库） | BY2HIT Wiki</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BY2HIT Wiki</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">哈工大业余无线电俱乐部, 中文维基站</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/BY2HIT" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/gitbook-fork-sync/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BY2HIT">
+      <meta itemprop="description" content="业余无线电/电子/互联网/...">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BY2HIT Wiki">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">github使用指南——在你pull request之前（如何同步你fork的库）
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-01 03:03:01" itemprop="dateCreated datePublished" datetime="2019-04-01T03:03:01+08:00">2019-04-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-02 23:54:10" itemprop="dateModified" datetime="2019-04-02T23:54:10+08:00">2019-04-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="github使用指南——在你pull-request之前（如何同步你fork的库）"><a href="#github使用指南——在你pull-request之前（如何同步你fork的库）" class="headerlink" title="github使用指南——在你pull request之前（如何同步你fork的库）"></a>github使用指南——在你pull request之前（如何同步你fork的库）</h1><h4 id="作者：BG2DGR"><a href="#作者：BG2DGR" class="headerlink" title=" 作者：BG2DGR"></a><p align="right"> 作者：BG2DGR</p></h4><h2 id="合作写书"><a href="#合作写书" class="headerlink" title="合作写书"></a>合作写书</h2><p>假定这篇文章的前置文章，李雨桐同学的《如何用git写文章》已经完善了，大家都可以按照他的步骤写一篇新的文章了，且推送到自己的GitHub上面，但是gitbook是托管到BY2HIT的GitHub上面(<a href="https://github.com/BY2HIT" target="_blank" rel="noopener">BY2HIT</a>)。想要你写的这篇文章发布，就需要向BY2HIT的Github发起pull request。<br>那么这样就会出现这样一个问题（李雨桐和陈功同学都遇到了这个问题）：在他们文章推送之前，三老师又更新了一篇文章，但是你本地的编写的环境是你fork的BY2HIT之前的GitHub，也就是说，三老师在更新自己的GitHub，又加入了文章之后（也可能是其他同学提交了文章），你的repo并没有跟着一同更新，这是你的pull request就好产生冲突（“conflict”）。如何解决呢？<br><a id="more"></a></p>
+<h2 id="保证你fork的仓库最新（syncing-your-fork）"><a href="#保证你fork的仓库最新（syncing-your-fork）" class="headerlink" title="保证你fork的仓库最新（syncing your fork）"></a>保证你fork的仓库最新（syncing your fork）</h2><p>GitHub实际上对应着git “远程仓库”的概念。（似乎隐约记得三老师曾经提过，新建一个repo要从GitHub新建然后，然后clone到本地进行开发）。而这个过程就是为了避免手动新建仓库（repo）的时候<code>git init</code>，需要自己添加位于GitHub的远程仓库。<br>新的命令，显示远程仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure></p>
+<p>如下图<br><img src="/2019/03/31/gitbook-fork-sync/00.png" width="00"><br>我新建一个文件夹a，并使用<code>git init</code>初始化一个git环境，最后使用<code>git remote -v</code>查看了git的远程库，结果返回是空，当然，因为从头到尾就没涉及到远程库的问题（笑😀）<br><strong>强调： 在图中有美元符“$”开头的是输入的命令，没有的为回显</strong></p>
+<p>我在GitHub创建一个repo，起名叫a<br>clone到本地，并使用<code>git remote -v</code>查看远程库<br><img src="/2019/03/31/gitbook-fork-sync/01.png" width="01"><br><img src="/2019/03/31/gitbook-fork-sync/02.png" width="02"><br>没错，你看到了叫origin的远程库，且后方的括号里面的fetch push我们知道他们一个负责同步（fetch），另一个负责推送（push）。所以，如何同步你fork的“上游库”呢？<br>看到这你应该有思路了吧？  </p>
+<h2 id="加入同步“上游库”"><a href="#加入同步“上游库”" class="headerlink" title="加入同步“上游库”"></a>加入同步“上游库”</h2><p>我在BG2DGR这个账号中fork了BY2HIT的repo,并克隆到本地<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/BG2DGR/books.by2hit.net.git</span><br></pre></td></tr></table></figure></p>
+<p>查看远程库<code>git remote -v</code><br><img src="/2019/03/31/gitbook-fork-sync/03.png" width="03"><br>为了同步，我们需要把三老师的远程库添加为本地的“上游远程库”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add upstream https://github.com/BY2HIT/books.by2hit.net.git</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：upstream只是我给起的名字，就像origin 都可以随便起的</strong><br>并查看远程库<br><img src="/2019/03/31/gitbook-fork-sync/04.png" width="04">   </p>
+<h2 id="同步库"><a href="#同步库" class="headerlink" title="同步库"></a>同步库</h2><p>经过上一步添加了upstream之后，我们在开发之前和之后都要同步一下，以保证没有pull request冲突的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch upstream</span><br></pre></td></tr></table></figure></p>
+<img src="/2019/03/31/gitbook-fork-sync/05.png" width="05">   
+<p>这时候，一般来说，都会把上游库拉到本地的<strong>upstream/master</strong>分支（关于分支的概念我们之后再谈）</p>
+<h2 id="合并你的分支"><a href="#合并你的分支" class="headerlink" title="合并你的分支"></a>合并你的分支</h2><p>经过上一步，上游库同步在upstream/master，我们希望它在我们的master当中，就涉及到分支的合并了。</p>
+<h3 id="如果你足够幸运，没有发生冲突的话"><a href="#如果你足够幸运，没有发生冲突的话" class="headerlink" title="如果你足够幸运，没有发生冲突的话"></a>如果你足够幸运，没有发生冲突的话</h3><p><strong>请确保你在你的本地master分支中，如果不在，使用<code>git checkout master</code>来切换你的分支</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge upstream/master</span><br></pre></td></tr></table></figure></p>
+<p>（PS：为了演示，我在本地中新建了一个文件a.txt，并commit）<br>这时弹出一个文本<br><img src="/2019/03/31/gitbook-fork-sync/06.png" width="06"><br>意思是说为这次merge添加提示信息，（其实git的合并分支实在主分支上再次产生一个commit，具体可见老米的ppt）<br>保持并关闭这个文本之后，<br><img src="/2019/03/31/gitbook-fork-sync/07.png" width="07"><br>实际上，为了这个演示效果，三老师把写了一半的本篇文章commit并push上去（到ArtisticZhao的repo）。所以图中显示的这个更新（绿色的+ 和 红色的减号表示变更）就是这半篇文章。  </p>
+<p>这时，我的这次更改——新建一个文件“a.txt”就已经和上游库保证同步了。</p>
+<h3 id="悲催的事，你和上游库同时更改了同一个文件，产生了conflict（冲突）"><a href="#悲催的事，你和上游库同时更改了同一个文件，产生了conflict（冲突）" class="headerlink" title="悲催的事，你和上游库同时更改了同一个文件，产生了conflict（冲突）"></a>悲催的事，你和上游库同时更改了同一个文件，产生了conflict（冲突）</h3><p>在写gitbook这个项目中，最有可能的情况就是三老师写了一篇文章更新了SUMMARY.md这个目录描述文件，而你写了一篇新文章也更新了SUMMARY.md，这样就产生了conflict。</p>
+<p>我模拟了一个常见情况，我新建了a.txt文件，并在SUMMARY.md中建立了到此文件的目录链接。 并提交<br><img src="/2019/03/31/gitbook-fork-sync/08.png" width="08"><br>然后在提交到我的远程库之前，我进行了之前的操作，保证我的库和上游库保证同步，而上游库三老师也在SUMMARY.md中添加了这篇文章的目录链接。<strong>我BG2DGR更改了SUMMARY.md,三老师也更改了SUMMARY.md。这时，我执行merge会发生什么呢？<br><img src="/2019/03/31/gitbook-fork-sync/09.png" width="09"><br>没错，在我们意料之中，git给我们报出了conflict。面对三老师和BG2DGR的同时修改，git懵逼了！<br>在这个时候git已经为你生成了冲突报告，我们查看一下SUMMARY.md这个文件<br><img src="/2019/03/31/gitbook-fork-sync/10.png" width="10"><br>git在冲突的文件中同时显示了修改，并加以标注<br>你会看到我的提交在</strong>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<strong>和</strong>=======<strong>之间，<br>而三老师的代码在 </strong>=======<strong> 和 </strong>&gt;&gt;&gt;&gt;&gt;&gt;&gt; upstream<strong>之间。这时我既想保留自己的目录，同实也保留三老师的目录。
+</strong>只需要我删除掉 “&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD”  “=======“ ”&gt;&gt;&gt;&gt;&gt;&gt;&gt; upstream“这三个标记，并且将代码调整至我想要的顺序和情况**<br><img src="/2019/03/31/gitbook-fork-sync/11.png" width="11"><br>类似这样。<br>然后产生一个commit<br><img src="/2019/03/31/gitbook-fork-sync/12.png" width="12"><br>这样如果commit成功了，就解决了这个冲突！（如果不成功就无法commit）</p>
+<h2 id="完成你的提交——pull-request"><a href="#完成你的提交——pull-request" class="headerlink" title="完成你的提交——pull request"></a>完成你的提交——pull request</h2><p>最后你就可以使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure></p>
+<p>更新到你的GitHub上（BG2DGR），并向三老师（ArtisticZhao）提交你的文章了。<br><img src="/2019/03/31/gitbook-fork-sync/13.png" width="13"><br><img src="/2019/03/31/gitbook-fork-sync/14.png" width="14"><br><strong>一定是看到”Able to merge“才可以提交哟</strong><br>否则三老师会被大家满是conflict的提交累坏的。</p>
+<blockquote>
+<p>参考资料<br><a href="https://www.zhihu.com/question/28676261" target="_blank" rel="noopener">知乎：gitlab或github下fork后如何同步源的新更新内容？的一个高票回答</a><br><a href="https://blog.csdn.net/zwl18210851801/article/details/79106448" target="_blank" rel="noopener">git命令行解决冲突文件步骤</a></p>
+</blockquote>
+<p>– END(累死)</p>
+<h4 id="时间：2018-04-15-0：33"><a href="#时间：2018-04-15-0：33" class="headerlink" title=" 时间：2018.04.15 0：33"></a><p align="right"> 时间：2018.04.15 0：33</p></h4><hr>
+<p>版权声明：</p>
+<p>文章均由哈尔滨工业大学业余无线电俱乐部，技术部原创，转载请联系<a href="hit.yuhaozhao@gmail.com">BY2HIT技术部</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>BY2HIT</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="http://yoursite.com/2019/03/31/gitbook-fork-sync/" title="github使用指南——在你pull request之前（如何同步你fork的库）">http://yoursite.com/2019/03/31/gitbook-fork-sync/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+            <a href="/tags/github/" rel="tag"># github</a>
+          
+            <a href="/tags/Wiki接入/" rel="tag"># Wiki接入</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/23/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="BY2HIT">
+            
+              <p class="site-author-name" itemprop="name">BY2HIT</p>
+              <div class="site-description motion-element" itemprop="description">业余无线电/电子/互联网/...</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#github使用指南——在你pull-request之前（如何同步你fork的库）"><span class="nav-number">1.</span> <span class="nav-text">github使用指南——在你pull request之前（如何同步你fork的库）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#作者：BG2DGR"><span class="nav-number">1.0.0.1.</span> <span class="nav-text"> 作者：BG2DGR</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#合作写书"><span class="nav-number">1.1.</span> <span class="nav-text">合作写书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保证你fork的仓库最新（syncing-your-fork）"><span class="nav-number">1.2.</span> <span class="nav-text">保证你fork的仓库最新（syncing your fork）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入同步“上游库”"><span class="nav-number">1.3.</span> <span class="nav-text">加入同步“上游库”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步库"><span class="nav-number">1.4.</span> <span class="nav-text">同步库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并你的分支"><span class="nav-number">1.5.</span> <span class="nav-text">合并你的分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如果你足够幸运，没有发生冲突的话"><span class="nav-number">1.5.1.</span> <span class="nav-text">如果你足够幸运，没有发生冲突的话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#悲催的事，你和上游库同时更改了同一个文件，产生了conflict（冲突）"><span class="nav-number">1.5.2.</span> <span class="nav-text">悲催的事，你和上游库同时更改了同一个文件，产生了conflict（冲突）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成你的提交——pull-request"><span class="nav-number">1.6.</span> <span class="nav-text">完成你的提交——pull request</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间：2018-04-15-0：33"><span class="nav-number">1.6.0.1.</span> <span class="nav-text"> 时间：2018.04.15 0：33</span></a></li></ol></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BY2HIT</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div>
+
+
+
+  <div class="footer-custom">Hosted by <a href="https://" class="theme-link" rel="noopener" target="_blank">Coding Pages</a></div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
