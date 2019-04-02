@@ -87,15 +87,21 @@ $ sudo systemctl restart sshd
 尝试链接你新更改的端口 12345, 如果发现无法连接, 从以下几个方面考虑:  
 - 防火墙是否开启  
     查看firewalld  
-    ```$ firewall-cmd --state```  
+    ```
+    $ firewall-cmd --state
+    ```
     查看返回值, 多半没开  
     查看iptables  
-    ```$ service iptables status```  
+    ```
+    $ service iptables status
+    ```
     查看返回值, 多半没开(iptables用于centos6之前, 而centos7之后采用firewall, firewall其实是iptables的一个封装,更方便管理, 之后我们会在服务器上启用它!)
 - SELinux是否启动  
     我们ssh的新端口无法连接多半是这个问题:  
     首先查看SELinux是否开启  
-    ```$ /usr/sbin/sestatus -v```  
+    ```
+    $ /usr/sbin/sestatus -v
+    ```
     如果SELinux status参数为enabled即为开启状态,   
     使用以下命令查看当前SElinux 允许的ssh端口：
     ```
@@ -115,7 +121,7 @@ $ sudo systemctl restart sshd
     ssh_port_t                    tcp    12345, 22
     ```
 
-再次尝试连接新的SSH端口, 成功则注释掉 ```port 22```, 重启SSH服务器重新登录22端口, 发现已经无法登录
+再次尝试连接新的SSH端口, 成功则注释掉 `port 22`, 重启SSH服务器重新登录22端口, 发现已经无法登录
 
 ### 3. 使用RSA密钥对登录
 RSA是利用非对称加密的方式, 产生了一对公钥和私钥, 公钥放到服务器当中, 私钥放在自己的PC中, 每次登录的时候, 系统发送私钥到服务器, 通过公钥验证身份后, 建立安全链接. 通过这种方式登录服务器更安全, 更方便(密码登录可能你的密码不够复杂, 而且每次不需要你输入密码即可登录)  
