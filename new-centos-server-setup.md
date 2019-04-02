@@ -4,6 +4,7 @@ date: 2019-03-23 03:03:01
 categories: Linux
 tags: [Linux, CentOS, 安全]
 ---
+#### <p align="right"> 作者：BG2DGR</p>
 很多同学购买了VPS服务器之后就随意使用了, 这之间往往存在很大的安全隐患, 本文通过对SSH, 账户, Firewall 以及 SELinux的设置, 以达到较高的安全性.
 <!-- More -->
 ## 0x01 用户设置
@@ -69,7 +70,10 @@ $ sudo systemctl restart sshd
 ```
 $ sudo vim /etc/ssh/sshd_config
 ```
-找到 ```#port 22```
+找到
+```
+#port 22
+```
 并改为:
 ```
 port 22     # 要保留22端口(默认端口), 大概率新端口不生效
@@ -96,8 +100,8 @@ $ sudo systemctl restart sshd
     使用以下命令查看当前SElinux 允许的ssh端口：
     ```
     $ sudo semanage port -l | grep ssh
+	ssh_port_t                     tcp      22  # 这是返回信息
     ```
-    返回"ssh_port_t                     tcp      22"
     添加新端口到SELinux
     ```
     $ sudo semanage port -a -t ssh_port_t -p tcp 12345
